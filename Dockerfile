@@ -1,13 +1,13 @@
 # Uygulamanıın çalışması için jdk gerekir
 
-FROM openjdk:22
+FROM openjdk:17
 
 #Projemizin jar dosyasının konumu
 ARG  JAR_FILE=target/*.jar
 
 
 # Projenin jar halini docker ın içine şu isimle kopyala.hepsi küçük olsun
-COPY ${JAR_FILE} devops-hello-app.jar
+COPY ${JAR_FILE} my-application.jar
 
 #terminalden çalıştırmak istediğin komutları cmd ile kullnıyorsunuz.
 #CMD apt-get update
@@ -18,4 +18,4 @@ COPY ${JAR_FILE} devops-hello-app.jar
 EXPOSE 8080
 
 # uygulamanın çalışacağı komut
-ENTRYPOINT ["java","-jar","devops-hello-app.jar"]
+ENTRYPOINT ["java","-jar","my-application.jar"]
