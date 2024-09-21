@@ -1,0 +1,62 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven3'
+        jdk 'JDK17'
+    }
+
+    stages {
+        stage('Build Maven') {
+            steps {
+            checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/obilir3323/devops-002-pipeline']])
+               //  sh 'mvn clean install'
+                bat 'mvn clean install'
+            }
+        }
+
+        stage('Docker Image') {
+            steps {
+
+               //  sh 'docker build  -t kubobilir/my-application    . '
+                bat 'docker build  -t kubobilir/my-application    . '
+            }
+        }
+        stage('Docker Image to docker hub') {
+            steps {
+
+               //  sh 'docker build  -t kubobilir/my-application    . '
+                //
+                script{
+                      withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
+                            // some block
+                            //bat 'docker login -u kubobilir -p  '
+                            bat 'echo docker login -u kubobilir -p  ${dockerhub}'
+                            bat 'docker push  kubobilir/my-application'
+                             }
+                         }
+            }
+        }
+        stage('Deploy Kubernetes') {
+            steps {
+
+                 //  sh 'docker build  -t kubobilir/my-application    . '
+                  //
+                script{
+                        //kubernetesDeploy configs: 'deploymentservice.yaml', kubeConfig: [path: ''], kubeconfigId: 'kubernetes', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+                        KubernetesDeploy ( configs: 'deploymentservice.yaml',  kubeconfigId: 'kubernetes')
+
+                           }
+              }
+          }
+
+
+
+
+
+
+
+
+
+    }
+}
