@@ -14,6 +14,16 @@ pipeline {
                 bat 'mvn clean install'
             }
         }
+stage('Unit Test') {
+            steps {
+                 bat 'Unit Test'
+            }
+        }
+
+
+
+
+
 
         stage('Docker Image') {
             steps {
@@ -51,7 +61,11 @@ pipeline {
           }
 
 
-
+ stage('Docker Image to Clean') {
+         steps {
+                    bat 'echo Docker Image to Clean'
+          }
+       }
 
 
 
