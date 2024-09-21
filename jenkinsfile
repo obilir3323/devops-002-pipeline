@@ -64,7 +64,11 @@ stage('Unit Test') {
 
  stage('Docker Image to Clean') {
          steps {
-                    bat 'echo Docker Image to Clean'
+                    //   sh 'docker rmi mimaraslan/my-application:latest'
+                                //  bat 'docker rmi mimaraslan/my-application:latest'
+
+                                // sh 'docker image prune -f'
+                                   bat 'docker image prune -f'
           }
        }
 
