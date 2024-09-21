@@ -14,7 +14,7 @@ spec:
       containers:
         - name: my-application
           //image: kubobilir/my-application:latest
-          image: kubobilir/my-application
+          image: kubobilir/my-application:latest
           resources:
             limits:
               memory: "512Mi"
